@@ -1,10 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">User Graph List</router-link> |
+      <router-link to="/create">Create Graph</router-link>
     </div>
-    <router-view />
+    <b-container>
+      <b-row>
+        <b-col> 
+          <router-view />
+        </b-col>
+      </b-row>
+    </b-container>
+   
   </div>
 </template>
 

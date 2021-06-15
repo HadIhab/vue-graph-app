@@ -1,0 +1,14 @@
+{
+  "graphs": [
+    {
+      	"id": 1,
+      	"graph_description": "Description of Djikstra",
+      	"graph_name": "Graph de Djikstra"
+      },
+      {
+      	"id": 2,
+      	"graph_description": "2Description of Djikstra",
+      	"graph_name": "2Graph de Djikstra"
+      }
+  ]
+}
