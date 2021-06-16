@@ -1,31 +1,64 @@
 {
   "graphs": [
     {
-      "id": 1,
-      "graph_name": "Faycal",
-      "graph_description": "Houseù",
+      "id": 3,
+      "graph_name": "Graph_test",
+      "graph_description": "Test purposes",
       "nodes": [
         {
-          "id": 5
+          "id": 1
         },
         {
-          "id": 6
+          "id": 2
+        },
+        {
+          "id": 3
         },
         {
           "id": 4
         },
         {
-          "id": 11
+          "id": 6
+        },
+        {
+          "id": 8
+        },
+        {
+          "id": 9
         }
       ],
       "links": [
         {
-          "sid": 5,
+          "sid": 1,
+          "tid": 2
+        },
+        {
+          "sid": 1,
+          "tid": 3
+        },
+        {
+          "sid": 1,
+          "tid": 4
+        },
+        {
+          "sid": 2,
           "tid": 6
         },
         {
+          "sid": 2,
+          "tid": 8
+        },
+        {
+          "sid": 3,
+          "tid": 4
+        },
+        {
           "sid": 4,
-          "tid": 11
+          "tid": 8
+        },
+        {
+          "sid": 4,
+          "tid": 9
         }
       ],
       "created_at": "2021/06/16",
@@ -33,20 +66,67 @@
     },
     {
       "id": 2,
-      "graph_name": "Noor",
-      "graph_description": "Riadh",
+      "graph_name": "Riadh",
+      "graph_description": "A graph for tests",
       "nodes": [
         {
-          "id": 8
+          "id": 1
         },
         {
-          "id": 10
+          "id": 3
+        },
+        {
+          "id": 4
+        },
+        {
+          "id": 5
+        },
+        {
+          "id": 2
+        },
+        {
+          "id": 6
+        },
+        {
+          "id": 7
         }
       ],
       "links": [
         {
-          "sid": 8,
-          "tid": 10
+          "sid": 1,
+          "tid": 3
+        },
+        {
+          "sid": 1,
+          "tid": 4
+        },
+        {
+          "sid": 1,
+          "tid": 5
+        },
+        {
+          "sid": 2,
+          "tid": 4
+        },
+        {
+          "sid": 2,
+          "tid": 6
+        },
+        {
+          "sid": 3,
+          "tid": 4
+        },
+        {
+          "sid": 4,
+          "tid": 5
+        },
+        {
+          "sid": 4,
+          "tid": 6
+        },
+        {
+          "sid": 5,
+          "tid": 7
         }
       ],
       "created_at": "2021/06/16",

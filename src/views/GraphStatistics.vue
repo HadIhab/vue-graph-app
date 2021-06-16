@@ -11,9 +11,10 @@
 	    </marker>
 	  </defs>
     </svg>
-
+    <div>
     <b-table striped hover :items="items"></b-table>
     <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options"  :link-cb="lcb"/>
+    </div>
 
   </div>
 </template>
@@ -64,30 +65,29 @@
             	this.nodes = graph.nodes
 		  		this.links = graph.links
 		  		this.nodeSize = graph.nodes.length
-		  		this.setItems(graph.nodes, graph.links)
+		  		this.setItems(graph.nodes, graph.links, graph.graph_name)
   				console.log(this.items)
 		  		
           })
 	    },
-	    setItems(nodes,links){
-	    	var item = {'id':null,tooltip:'',neighbors:[]}
+	    setItems(nodes,links,tooltip){
+	    	var item = {'node_id':null,'tooltip':'','node_neighbors':[]}
 	    	for (var index = 0; index < nodes.length; index++) {
-		        item.id = nodes[index].id
+		        item.node_id = nodes[index].id
+		        item.tooltip = `My Node num ${item.node_id}`
 		        for(var j = 0; j<links.length; j++) {
 
 		        	if(links[j].sid === nodes[index].id){
-		        		item.neighbors.push(links[j].tid)
-		        		console.log('yo1')
+		        		item.node_neighbors.push(links[j].tid)
 		        	}
 		        	else{
 		        		if(links[j].tid === nodes[index].id) {
-			        		item.neighbors.push(links[j].sid)
-			        		console.log('yo2')
+			        		item.node_neighbors.push(links[j].sid)
 		        		}
 		            }
 		        }
 		        this.items.push(item)
-		        item = {'id':null,tooltip:'',neighbors:[]}
+		        item = {'node_id':null,'tooltip':'','node_neighbors':[]}
 		      }
 
 	    }
