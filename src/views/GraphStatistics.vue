@@ -12,7 +12,7 @@
 	  </defs>
     </svg>
 
-    
+    <b-table striped hover :items="items"></b-table>
     <d3-network ref='net' :net-nodes="nodes" :net-links="links" :options="options"  :link-cb="lcb"/>
 
   </div>
@@ -28,13 +28,13 @@
   	},
   	created() {
   		this.getGraph(this.$route.params.id)
-  		
   	},
   	data () {
 		    return {
 		      nodes: [],
 		      links: [],
 		      nodeSize: null,
+		      items: [],
 		      canvas:false
 
 		    }
@@ -64,7 +64,32 @@
             	this.nodes = graph.nodes
 		  		this.links = graph.links
 		  		this.nodeSize = graph.nodes.length
+		  		this.setItems(graph.nodes, graph.links)
+  				console.log(this.items)
+		  		
           })
+	    },
+	    setItems(nodes,links){
+	    	var item = {'id':null,tooltip:'',neighbors:[]}
+	    	for (var index = 0; index < nodes.length; index++) {
+		        item.id = nodes[index].id
+		        for(var j = 0; j<links.length; j++) {
+
+		        	if(links[j].sid === nodes[index].id){
+		        		item.neighbors.push(links[j].tid)
+		        		console.log('yo1')
+		        	}
+		        	else{
+		        		if(links[j].tid === nodes[index].id) {
+			        		item.neighbors.push(links[j].sid)
+			        		console.log('yo2')
+		        		}
+		            }
+		        }
+		        this.items.push(item)
+		        item = {'id':null,tooltip:'',neighbors:[]}
+		      }
+
 	    }
 	}
   }
