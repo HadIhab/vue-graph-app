@@ -28,14 +28,14 @@
         <b-row>
           <b-col>
             <b-form-group  label="Choose node to create:" label-for="input-2">
-              <b-form-select @change.native="addNode" v-model="selected_node" :options="options_nodes" class="form-control mb-3">
+              <b-form-select @change="addNode" v-model="selected_node" :options="options_nodes" class="form-control mb-3">
               </b-form-select>
             </b-form-group>
           </b-col>
           
           <b-col>
             <b-form-group label="Choose node to link with it:" label-for="input-2">
-              <b-form-select @change.native="prepareLink" v-model="selected_node_to_link" class="form-control mb-3" :options="options_nodes_to_link">
+              <b-form-select @change="prepareLink" v-model="selected_node_to_link" class="form-control mb-3" :options="options_nodes_to_link">
               </b-form-select>
             </b-form-group>
           </b-col>
@@ -44,17 +44,17 @@
       <b-row>
         <b-col>
           <slot name="DeleteButton">
-                <Button  class="btn btn-danger btn-sm btn-block">
-                    Done with node
-                </Button>
-          </slot>
-        </b-col>
-        <b-col>
-          <slot name="DeleteButton">
                 <Button  class="btn btn-danger btn-sm btn-block" @click="addLink">
                     Link to node
                 </Button>
           </slot>    
+        </b-col>
+        <b-col>
+          <slot name="DeleteButton">
+                <Button  class="btn btn-danger btn-sm btn-block">
+                    Submit
+                </Button>
+          </slot>
         </b-col>
       </b-row>
 
@@ -76,41 +76,50 @@
     data() {
       return {
         form: {
-          graph_name: '',
-          graph_description: '',
-          nodes: [],
-          links:[]
+          'graph_name': '',
+          'graph_description': '',
+          'nodes': [],
+          'links':[]
       		},
         selected_node: null,
         selected_node_to_link: null,
         options_nodes: [],
         options_nodes_to_link: [],
         temp_node: null,
-        temp_link: null
+        temp_link: {}
 
   		}
     },
     created() {
       for (var index = 1; index < 100; index++) {
         this.options_nodes.push({value: index, text: index})
-        this.options_nodes_to_link.push({value: (index+1), text: (index+1)})
+        //this.options_nodes_to_link.push({value: (index+1), text: (index+1)})
       }
+      console.log(this.form)
       
     },
     methods: {
       addNode() {
-        this.form.nodes.push({'id': this.selected_node})
-        alert(this.form.nodes)     
+        this.options_nodes_to_link = []
+        for (var index = this.selected_node+1; index <= 100; index++) {
+          this.options_nodes_to_link.push({value: index, text: index})
+        }
+        if (!(this.form.nodes.some(node => node.id === (this.selected_node))) ) {
+          this.form.nodes.push({'id': this.selected_node})
+        }
+        else{
+          console.log('raho kayen deja')
+        }    
       },
       prepareLink() {
-        this.temp_links = { 
+        this.temp_link = { 
           'sid':this.selected_node, 
           'tid': this.selected_node_to_link
         }
       },
       addLink() {
-        this.form.links.push(this.temp_links)
-        alert(this.form.links)
+        this.form.links.push(this.temp_link)
+        console.log(this.form)
       }
     }
   }
