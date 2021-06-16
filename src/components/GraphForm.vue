@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <b-form >
+    <b-form @submit.prevent="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Graph Name:"
@@ -27,15 +27,15 @@
       <b-form-group>
         <b-row>
           <b-col>
-            <b-form-group  label="Choose node to create:" label-for="input-2">
-              <b-form-select @change="addNode" v-model="selected_node" :options="options_nodes" class="form-control mb-3">
+            <b-form-group  label="Choose node to create:" label-for="select-1">
+              <b-form-select id="select-1" @change="addNode" v-model="selected_node" :options="options_nodes" class="form-control mb-3">
               </b-form-select>
             </b-form-group>
           </b-col>
           
           <b-col>
-            <b-form-group label="Choose node to link with it:" label-for="input-2">
-              <b-form-select @change="prepareLink" v-model="selected_node_to_link" class="form-control mb-3" :options="options_nodes_to_link">
+            <b-form-group label="Choose node to link with it:" label-for="select-2">
+              <b-form-select id="select-2" @change="prepareLink" v-model="selected_node_to_link" class="form-control mb-3" :options="options_nodes_to_link">
               </b-form-select>
             </b-form-group>
           </b-col>
@@ -43,18 +43,17 @@
       </b-form-group>
       <b-row>
         <b-col>
-          <slot name="DeleteButton">
-                <Button  class="btn btn-danger btn-sm btn-block" @click="addLink">
+          <slot name="LinkButton">
+                <b-button  class="btn btn-danger btn-sm btn-block" @click="addLink">
                     Link to node
-                </Button>
+                </b-button>
           </slot>    
         </b-col>
         <b-col>
-          <slot name="DeleteButton">
-                <Button  class="btn btn-danger btn-sm btn-block">
-                    Submit
-                </Button>
-          </slot>
+                <b-button  type="submit" variant="primary">
+                    Create Graph
+                </b-button>
+          
         </b-col>
       </b-row>
 
@@ -67,6 +66,7 @@
 
 <script>
   import ActionButton from '@/components/ActionButton'
+  import GraphServices from '@/services/GraphServices.js'
 
   export default {
     name: 'GraphForm',
@@ -76,10 +76,13 @@
     data() {
       return {
         form: {
+          'id': null,
           'graph_name': '',
           'graph_description': '',
           'nodes': [],
-          'links':[]
+          'links':[],
+          'created_at': null,
+          'updated_at': null
       		},
         selected_node: null,
         selected_node_to_link: null,
@@ -90,26 +93,21 @@
 
   		}
     },
-    created() {
+    created() {  
       for (var index = 1; index < 100; index++) {
         this.options_nodes.push({value: index, text: index})
-        //this.options_nodes_to_link.push({value: (index+1), text: (index+1)})
       }
-      console.log(this.form)
-      
     },
     methods: {
       addNode() {
+
         this.options_nodes_to_link = []
         for (var index = this.selected_node+1; index <= 100; index++) {
           this.options_nodes_to_link.push({value: index, text: index})
         }
         if (!(this.form.nodes.some(node => node.id === (this.selected_node))) ) {
           this.form.nodes.push({'id': this.selected_node})
-        }
-        else{
-          console.log('raho kayen deja')
-        }    
+        } 
       },
       prepareLink() {
         this.temp_link = { 
@@ -118,9 +116,29 @@
         }
       },
       addLink() {
-        this.form.links.push(this.temp_link)
-        console.log(this.form)
-      }
+        if(!(this.form.nodes.some(node => node.id === (this.temp_link.tid)))) {
+          this.form.nodes.push({'id': this.temp_link.tid})
+        }
+        if(!(this.form.links.some(link => (link.sid === (this.temp_link.sid) && link.tid === (this.temp_link.tid)) )) ) {  
+          this.form.links.push(this.temp_link)
+          alert('Link added succesfully')
+        }
+        else{
+          alert('Link already created')
+        }
+      },
+      onSubmit() {
+        this.form.created_at = new Date().toJSON().slice(0,10).replace(/-/g,'/') 
+        this.generateID()
+        GraphServices.postGraphData(this.form)
+        .then(()=>{ 
+            alert('Graph posted to data base')
+          })
+      },
+      generateID() {
+        this.$store.dispatch('fetchGraphs',{})
+        this.form.id = this.$store.state.graphs.length + 1
+      }  
     }
   }
 </script>

@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
   	graphs: [],
-    graphsTotal: 0,
+    graphsTotal: 'salut',
   },
   mutations: {
   	SET_GRAPHS(state,graphs) {
@@ -33,7 +33,7 @@ export default new Vuex.Store({
             .catch(error => {
               console.log('There was an error:', error.response)
             })
-    }    
+    } 
   },
   modules: {},
 });
