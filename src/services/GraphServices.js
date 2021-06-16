@@ -19,6 +19,9 @@ export default{
 
 		return apiClient.post('/graphs',data)
 	},
+	deleteGraphData(id){
+		return apiClient.delete('/graphs/'+id)
+	},
 
 }
 

@@ -11,12 +11,12 @@ export default new Vuex.Store({
     graphsTotal: 0,
   },
   mutations: {
-  	SET_GRAPHS(state,graphs){
+  	SET_GRAPHS(state,graphs) {
             state.graphs = graphs
         }
   },
   actions: {
-  	fetchGraphs({commit},{}){
+  	fetchGraphs({commit}) {
           GraphServices.getGraphs()
             .then(response => {
               commit('SET_GRAPHS',response.data)
@@ -24,7 +24,16 @@ export default new Vuex.Store({
             .catch(error => {
               console.log('There was an error:', error.response)
             })
-        }
+        },
+    deleteGraph({commit,dispatch},graph) {
+          GraphServices.deleteGraphData(graph.id)
+            .then(response => {
+              dispatch('fetchGraphs')
+            })
+            .catch(error => {
+              console.log('There was an error:', error.response)
+            })
+    }    
   },
   modules: {},
 });
