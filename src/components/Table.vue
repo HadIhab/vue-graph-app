@@ -11,11 +11,11 @@
 
       <b-tbody>
         <b-tr v-for="(graph,index) in allDBgraphs">
-          <b-td>{{graph.graph_name}} {{index}}</b-td>
+          <b-td>{{graph.graph_name}}</b-td>
           <b-td>{{graph.graph_description}}</b-td>
           <b-td>                         
               <slot name="ReadButton">
-                <Button :graphsID="graph.id" class="btn btn-primary btn-sm btn-block" @click="fireShow(index)">
+                <Button :graphsID="graph.id" class="btn btn-primary btn-sm btn-block" @click="fireShow(graph.id)">
                     Show graph
                 </Button>
               </slot>
@@ -63,8 +63,8 @@ import ActionButton from '@/components/ActionButton'
       fireEdit(index){
         this.$emit('edit-action',index)
       },
-      fireShow(index){
-        this.$emit('show-action',index)
+      fireShow(id){
+        this.$emit('show-action',id)
       }
     }
   };

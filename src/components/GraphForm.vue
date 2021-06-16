@@ -57,7 +57,7 @@
         </b-col>
       </b-row>
 
-        <div class="mt-2">Selected: <strong>{{ selected_node }}</strong></div>
+        <div class="mt-2">Selected Node: <strong>{{ selected_node }}</strong></div>
       </b-form>
 
 
