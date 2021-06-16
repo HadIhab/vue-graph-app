@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import GraphEdition from "../views/GraphEdition.vue";
 import GraphStatistics from "../views/GraphStatistics.vue";
+import GraphCreation from "../views/GraphCreation.vue";
 
 
 Vue.use(VueRouter);
@@ -16,11 +17,7 @@ const routes = [
   {
     path: "/create",
     name: "createGraph",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/GraphCreation.vue"),
+    component: GraphCreation
   },
   {
     path: "/graphs/:id/edit",

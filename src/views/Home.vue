@@ -3,7 +3,7 @@
   	<Table :allDBgraphs="graphs" @ask-delete-action="ask_Del_Graph"
   		@edit-action="editGraph" @show-action="show_Stat_Graph"
   	/>
-  	    <b-modal ref="my-modal" hide-footer>
+  	<b-modal ref="my-modal" hide-footer>
       <div class="d-block text-center">
         <h3>Are you sure you want to delete this graph!</h3>
       </div>
