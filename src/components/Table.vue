@@ -5,6 +5,7 @@
         <b-tr>
           <b-th>Graph Name</b-th>
           <b-th>Description</b-th>
+          <b-th>Created at</b-th>
           <b-th colspan="3">Action</b-th>
         </b-tr>
       </b-thead>
@@ -13,6 +14,7 @@
         <b-tr v-for="(graph,index) in allDBgraphs">
           <b-td>{{graph.graph_name}}</b-td>
           <b-td>{{graph.graph_description}}</b-td>
+          <b-td>{{graph.created_at}}</b-td>
           <b-td>                         
               <slot name="ReadButton">
                 <Button :graphsID="graph.id" class="btn btn-primary btn-sm btn-block" @click="fireShow(graph.id)">
@@ -22,7 +24,7 @@
           </b-td>
           <b-td>
               <slot name="EditButton">
-                <Button :graphsID="graph.id" class="btn btn-success btn-sm btn-block" @click="fireEdit(index)">
+                <Button :graphsID="graph.id" class="btn btn-success btn-sm btn-block" @click="fireEdit(graph.id)">
                      Edit
                 </Button>
               </slot>
@@ -60,8 +62,8 @@ import ActionButton from '@/components/ActionButton'
       fireDelete(Graph){
         this.$emit('ask-delete-action',Graph)
       },
-      fireEdit(index){
-        this.$emit('edit-action',index)
+      fireEdit(id){
+        this.$emit('edit-action',id)
       },
       fireShow(id){
         this.$emit('show-action',id)

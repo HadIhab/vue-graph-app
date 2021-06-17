@@ -23,8 +23,25 @@
           required
         ></b-form-input>
       </b-form-group>
-      <slot name="editingArea">
-      </slot>  
+      
+      <b-form-group>
+        <b-row>
+          <b-col>
+            <b-form-group  label="Choose node to delete:" label-for="node-del">
+              <b-form-select id="node-del" @change="deleteNode" v-model="selected_node" :options="form.nodes" class="form-control mb-3">
+              </b-form-select>
+            </b-form-group>
+          </b-col>
+          
+          <b-col>
+            <b-form-group label="Choose link to delete:" label-for="link-del">
+              <b-form-select id="link-del" @change="deleteLink" v-model="selected_node_to_link" class="form-control mb-3" :options="form.links">
+              </b-form-select>
+            </b-form-group>
+          </b-col>
+        </b-row>  
+      </b-form-group>
+
       <b-form-group>
         <b-row>
           <b-col>
@@ -95,6 +112,7 @@
   		}
     },
     created() {  
+      this.getGraph(this.$route.params.id)
       for (var index = 1; index < 100; index++) {
         this.options_nodes.push({value: index, text: index})
       }
@@ -128,6 +146,12 @@
           alert('Link already created')
         }
       },
+      getGraph(id) {
+        GraphServices.getGraph(id)
+        .then((response)=>{ 
+              this.form = response.data
+          })
+      },
       onSubmit() {
         this.form.created_at = new Date().toJSON().slice(0,10).replace(/-/g,'/') 
         this.generateID()
@@ -135,11 +159,7 @@
         .then(()=>{ 
             alert('Graph posted to data base')
           })
-      },
-      generateID() {
-        this.$store.dispatch('fetchGraphs',{})
-        this.form.id = this.$store.state.graphs[length - 1] + 1
-      }  
+      }
     }
   }
 </script>

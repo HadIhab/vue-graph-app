@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>This is show_Stat_Graph page</h1>
+    <h1>Statistics of the graph : {{graph_name}}</h1>
     <svg >
 	  <defs>
 	    <marker id="m-end" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth" >
@@ -32,6 +32,7 @@
   	},
   	data () {
 		    return {
+		      graph_name: '',
 		      nodes: [],
 		      links: [],
 		      nodeSize: null,
@@ -62,6 +63,7 @@
 	    	GraphServices.getGraph(id)
 	    	.then((response)=>{ 
             	var graph = response.data
+            	this.graph_name = graph.graph_name
             	this.nodes = graph.nodes
 		  		this.links = graph.links
 		  		this.nodeSize = graph.nodes.length

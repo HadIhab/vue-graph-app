@@ -1,5 +1,23 @@
 <template>
   <div>
-    <h1>This is edit page</h1>
+    <GraphEditForm/>
+
   </div>
 </template>
+
+<script>
+  import GraphEditForm from '@/components/GraphEditForm'
+
+  export default {
+    name: 'GraphEdition',
+    components:{
+      GraphEditForm
+    },
+    data() {
+      return {
+  		}
+    },
+    methods: {
+    }
+  }
+</script>
