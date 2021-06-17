@@ -41,7 +41,23 @@
           </b-col>
         </b-row>  
       </b-form-group>
-
+      <div>
+        <b-row>
+          <b-col>
+            <slot name="LinkButton">
+                  <b-button  class="btn btn-danger btn-sm btn-block" @click="">
+                      Delete node
+                  </b-button>
+            </slot>    
+          </b-col>
+          <b-col>
+                  <b-button  class="btn btn-danger btn-sm btn-block" @click="">
+                      delete link
+                  </b-button>
+            
+          </b-col>
+        </b-row>
+      </div>  
       <b-form-group>
         <b-row>
           <b-col>
@@ -69,7 +85,7 @@
         </b-col>
         <b-col>
                 <b-button  type="submit" variant="primary">
-                    Create Graph
+                    Update Graph
                 </b-button>
           
         </b-col>
@@ -155,11 +171,10 @@
           })
       },
       onSubmit() {
-        this.form.created_at = new Date().toJSON().slice(0,10).replace(/-/g,'/') 
-        this.generateID()
-        GraphServices.postGraphData(this.form)
+        this.form.updated_at = new Date().toJSON().slice(0,10).replace(/-/g,'/') 
+        GraphServices.updateGraphData(this.form.id,this.form)
         .then(()=>{ 
-            alert('Graph posted to data base')
+            alert('Graph updated succesfully')
           })
       }
     }
