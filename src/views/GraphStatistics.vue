@@ -68,7 +68,6 @@
 		  		this.links = graph.links
 		  		this.nodeSize = graph.nodes.length
 		  		this.setItems(graph.nodes, graph.links, graph.graph_name)
-  				console.log(this.items)
 		  		
           })
 	    },

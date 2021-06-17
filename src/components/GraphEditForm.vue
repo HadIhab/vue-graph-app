@@ -28,14 +28,14 @@
         <b-row>
           <b-col>
             <b-form-group  label="Choose node to delete:" label-for="node-del">
-              <b-form-select id="node-del" @change="deleteNode" v-model="selected_node" :options="form.nodes" class="form-control mb-3">
+              <b-form-select id="node-del" @change="" v-model="selected_node_del" :options="select_nodes" class="form-control mb-3">
               </b-form-select>
             </b-form-group>
           </b-col>
           
           <b-col>
             <b-form-group label="Choose link to delete:" label-for="link-del">
-              <b-form-select id="link-del" @change="deleteLink" v-model="selected_node_to_link" class="form-control mb-3" :options="form.links">
+              <b-form-select id="link-del" @change="" v-model="selected_node_to_link" class="form-control mb-3" :options="select_links">
               </b-form-select>
             </b-form-group>
           </b-col>
@@ -45,13 +45,13 @@
         <b-row>
           <b-col>
             <slot name="LinkButton">
-                  <b-button  class="btn btn-danger btn-sm btn-block" @click="">
+                  <b-button  class="btn btn-danger btn-sm btn-block" @click="deleteNode">
                       Delete node
                   </b-button>
             </slot>    
           </b-col>
           <b-col>
-                  <b-button  class="btn btn-danger btn-sm btn-block" @click="">
+                  <b-button  class="btn btn-danger btn-sm btn-block" @click="deleteLink">
                       delete link
                   </b-button>
             
@@ -119,9 +119,12 @@
           'updated_at': null
       		},
         selected_node: null,
+        selected_node_del: null,
         selected_node_to_link: null,
         options_nodes: [],
         options_nodes_to_link: [],
+        select_nodes: [],
+        select_links: [],
         temp_node: null,
         temp_link: {}
 
@@ -129,7 +132,6 @@
     },
     created() {  
       this.getGraph(this.$route.params.id)
-      console.log(this.form.links)
       for (var index = 1; index < 100; index++) {
         this.options_nodes.push({value: index, text: index})
       }
@@ -163,12 +165,37 @@
           alert('Link already created')
         }
       },
+      deleteNode() {
+        alert('Not yet implemented')
+        /*delete node then delete all its links*/
+        /*var nodes = this.form.nodes
+        console.log(nodes)
+        for (var i=0; i< nodes.length; i++) {
+          if (nodes[i].id === this.selected_node_del){
+            nodes.slice(i,1)
+          }
+        }
+        console.log('after '+nodes)*/
+
+      },
+      deleteLink() {
+        alert('Not yet implemented')
+      },
       getGraph(id) {
         GraphServices.getGraph(id)
         .then((response)=>{ 
               this.form = response.data
-              console.log('app '+this.form.links)
+              this.initialiseSelector(this.form.nodes,this.form.links)
+              
           })
+      },
+      initialiseSelector(nodes,links) {
+        for(var i =0;i< nodes.length; i++){
+          this.select_nodes.push({value:nodes[i].id, text:nodes[i].id})
+        }
+        for(var j =0;j< links.length; j++){
+          this.select_links.push({value:links[j], text:links[j].sid+' linked with '+links[j].tid})
+        }
       },
       onSubmit() {
         this.form.updated_at = new Date().toJSON().slice(0,10).replace(/-/g,'/') 
