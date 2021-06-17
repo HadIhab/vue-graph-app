@@ -113,6 +113,7 @@
     },
     created() {  
       this.getGraph(this.$route.params.id)
+      console.log(this.form.links)
       for (var index = 1; index < 100; index++) {
         this.options_nodes.push({value: index, text: index})
       }
@@ -150,6 +151,7 @@
         GraphServices.getGraph(id)
         .then((response)=>{ 
               this.form = response.data
+              console.log('app '+this.form.links)
           })
       },
       onSubmit() {

@@ -22,6 +22,9 @@ export default{
 	deleteGraphData(id){
 		return apiClient.delete('/graphs/'+id)
 	},
+	updateGraphData(id,data){
+		return apiClient.put('/graphs/'+id,data)
+	},
 	getGraph(id) {
 		return apiClient.get('/graphs/'+id)	
 	}
